@@ -1,0 +1,26 @@
+package com.RedisExample.RedisExample.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
+
+@Entity
+@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Market {
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
+
+        @Column(name = "name", nullable = false)
+        private String name;
+
+        @JsonIgnore
+        @OneToMany(mappedBy = "market", cascade = CascadeType.ALL, orphanRemoval = true)
+        private List<Product> products;
+}
