@@ -4,7 +4,7 @@ import com.RedisExample.RedisExample.Repository.ProductRepository;
 import com.RedisExample.RedisExample.Service.ProductService;
 import com.RedisExample.RedisExample.Service.Redis.RedisService;
 import com.RedisExample.RedisExample.model.Product;
-import com.RedisExample.RedisExample.utils.aspect.performans.PerformanceAspect;
+import com.RedisExample.RedisExample.utils.aspect.logs.LoggingAspect;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    @PerformanceAspect
+    @LoggingAspect
     public List<Product> getAllProducts() {
 
         List<Product> products = repository.getAllProducts();

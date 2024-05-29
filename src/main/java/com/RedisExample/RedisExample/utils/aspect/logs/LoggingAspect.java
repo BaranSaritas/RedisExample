@@ -1,4 +1,4 @@
-package com.RedisExample.RedisExample.utils.aspect.performans;
+package com.RedisExample.RedisExample.utils.aspect.logs;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PerformanceAspect {
-
+public @interface LoggingAspect {
+    String additionalMessage() default "";
 }
