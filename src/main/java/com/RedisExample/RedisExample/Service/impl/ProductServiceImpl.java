@@ -4,6 +4,7 @@ import com.RedisExample.RedisExample.Repository.ProductRepository;
 import com.RedisExample.RedisExample.Service.ProductService;
 import com.RedisExample.RedisExample.Service.Redis.RedisService;
 import com.RedisExample.RedisExample.model.Product;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +20,36 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository repository;
     private final RedisService redisService;
-
+    private final EntityManager entityManager;
     @Override
     public List<Product> getAllProducts() {
+
+        // ehCache yöntemi
+        long startTime = System.currentTimeMillis();
+        List<Product> products = repository.getAllProducts();
+        long elapsedTime1 = System.currentTimeMillis() - startTime;
+
+        System.out.println("First load time: " + elapsedTime1 + " ms");
+
+        entityManager.clear(); // level 1 clear
+
+
+         startTime = System.currentTimeMillis();
+        List<Product> products2 = repository.getAllProducts();
+         elapsedTime1 = System.currentTimeMillis() - startTime;
+
+        System.out.println("Second load time: " + elapsedTime1 + " ms");
+
+
+
+        /*   Redis yöntemi
         List<Product> products = (List<Product>) redisService.getValue("allProducts");
         if (products == null) {
             products = repository.getAllProducts();
             redisService.setValue("allProducts", products, 10, TimeUnit.MINUTES);
         }
+
+         */
         return products;
     }
     @Override
